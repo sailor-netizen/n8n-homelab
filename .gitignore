@@ -1,0 +1,14 @@
+# Security
+.env
+nginx/ssl/
+
+# Data Directories
+postgres_data/
+n8n-proxmox-data/
+n8n-homelab-data/
+n8n-game-data/
+n8n-ai-data/
+
+# System
+.DS_Store
+Thumbs.db
