@@ -1,14 +1,15 @@
-# Security
-.env
-nginx/ssl/
-
-# Data Directories
-postgres_data/
-n8n-proxmox-data/
-n8n-homelab-data/
-n8n-game-data/
-n8n-ai-data/
-
 # System
 .DS_Store
 Thumbs.db
+.idea/
+.vscode/
+
+# Global Ignores
+*.log
+tmp/
+
+# n8n Cluster
+docker-templates/n8n-cluster/.env
+docker-templates/n8n-cluster/nginx/ssl/
+docker-templates/n8n-cluster/postgres_data/
+docker-templates/n8n-cluster/n8n-*-data/

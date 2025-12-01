@@ -1,49 +1,17 @@
-# n8n Homelab Setup
+# SailorNet Shipyard ⚓
 
-A multi-instance n8n setup using Docker Compose and Nginx reverse proxy.
+Welcome to the **Shipyard**! This is the central hub for the **SailorNet** infrastructure, hosting self-hosted projects, automation fleets, and container configurations.
 
-## Architecture
+## Projects
 
-- **4 n8n Instances**:
-  - `n8n-proxmox`: Proxmox Management & Telegram
-  - `n8n-homelab`: Homelab Automation
-  - `n8n-game`: Game Manager
-  - `n8n-ai`: AI & Agents
-- **PostgreSQL**: Shared database server with isolated databases for each instance.
-- **Nginx**: Reverse proxy with SSL termination.
+### 1. [n8n Cluster](./docker-templates/n8n-cluster)
+A robust, multi-instance n8n setup running on Docker Compose.
+- **Features**: 4 isolated n8n instances (Proxmox, Homelab, Game, AI), Nginx reverse proxy, SSL termination, and PostgreSQL backend.
+- **Status**: Active
 
-## Prerequisites
-
-- Docker & Docker Compose
-- A domain name (e.g., `sailor.net`)
-- DNS records pointing to your server
-
-## Setup
-
-1. **Clone the repository:**
-   ```bash
-   git clone <your-repo-url>
-   cd <repo-name>
-   ```
-
-2. **Configure Environment:**
-   Copy the example environment file (you need to create this from your actual .env) and fill in your secrets.
-   ```bash
-   cp .env.example .env
-   nano .env
-   ```
-
-3. **Generate SSL Certificates:**
-   Follow the instructions in `SSL_SETUP.md`.
-
-4. **Start Services:**
-   ```bash
-   docker compose up -d
-   ```
-
-## Access
-
-- https://n8n-proxmox.yourdomain.com
-- https://n8n-homelab.yourdomain.com
-- https://n8n-game.yourdomain.com
-- https://n8n-ai.yourdomain.com
+## Structure
+- `/docker-templates`: Collection of Docker Compose setups for easy deployment.
+  - `/n8n-cluster`: The n8n automation cluster.
+- `/ai`: AI assistant logs, prompts, and project history.
+  - `/prompts`: System prompts organized by AI model (Claude, Grok, GPT, etc.).
+  - `CHANGELOG.md`: Project version history.
