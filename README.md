@@ -12,6 +12,7 @@ A robust, multi-instance n8n setup running on Docker Compose.
 ## Structure
 - `/docker-templates`: Collection of Docker Compose setups for easy deployment.
   - `/n8n-cluster`: The n8n automation cluster.
+- `/proxmox`: Proxmox LXC setup guides for running Docker templates.
 - `/ai`: AI assistant logs, prompts, and project history.
   - `/prompts`: System prompts organized by AI model (Claude, Grok, GPT, etc.).
   - `CHANGELOG.md`: Project version history.

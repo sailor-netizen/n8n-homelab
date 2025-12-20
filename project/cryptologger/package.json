@@ -1,0 +1,74 @@
+{
+  "name": "cryptologger",
+  "version": "1.0.0",
+  "description": "Crypto Tax Logger - Track cryptocurrency trades for Australian tax compliance",
+  "main": "dist/main/index.js",
+  "author": "Your Name",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev:main\" \"npm run dev:preload\" \"wait-on dist/main/index.js dist/preload/index.js && cross-env NODE_ENV=development npm run dev:renderer-and-electron\"",
+    "dev:main": "vite build --config vite.main.config.ts --watch --mode development",
+    "dev:preload": "vite build --config vite.preload.config.ts --watch --mode development",
+    "dev:renderer-and-electron": "concurrently \"vite --config vite.renderer.config.ts\" \"wait-on http://localhost:5173 && electron .\"",
+    "build": "npm run build:main && npm run build:preload && npm run build:renderer",
+    "build:main": "vite build --config vite.main.config.ts",
+    "build:preload": "vite build --config vite.preload.config.ts",
+    "build:renderer": "vite build --config vite.renderer.config.ts",
+    "package": "npm run build && electron-builder",
+    "package:win": "npm run build && electron-builder --win",
+    "lint": "eslint src --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@electron-toolkit/preload": "^3.0.0",
+    "@electron-toolkit/utils": "^3.0.0",
+    "better-sqlite3": "^9.2.2",
+    "ccxt": "^4.2.25",
+    "ethers": "^6.10.0",
+    "@solana/web3.js": "^1.87.6",
+    "@walletconnect/web3-provider": "^1.8.0",
+    "axios": "^1.6.5",
+    "date-fns": "^3.0.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.21.1"
+  },
+  "devDependencies": {
+    "@electron/rebuild": "^3.5.0",
+    "@types/better-sqlite3": "^7.6.8",
+    "@types/node": "^20.10.7",
+    "@types/react": "^18.2.47",
+    "@types/react-dom": "^18.2.18",
+    "@typescript-eslint/eslint-plugin": "^6.18.1",
+    "@typescript-eslint/parser": "^6.18.1",
+    "@vitejs/plugin-react": "^4.2.1",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "electron": "^28.1.3",
+    "electron-builder": "^24.9.1",
+    "eslint": "^8.56.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.11",
+    "wait-on": "^7.2.0"
+  },
+  "build": {
+    "appId": "com.cryptologger.app",
+    "productName": "Crypto Tax Logger",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "resources/icon.ico"
+    }
+  }
+}
