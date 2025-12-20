@@ -30,6 +30,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Electron Externalization**: Fixed Electron module bundling issue by using SSR mode and proper external configuration
 - **Nginx Configuration**: Recreated missing Nginx server block configs (`n8n-proxmox.conf`, `n8n-homelab.conf`, `n8n-game.conf`, `n8n-ai.conf`)
 - **Nginx Mounting**: Fixed empty `conf.d/` directory issue by regenerating configuration files
+- **Electron Startup**: Fixed `Cannot read properties of undefined (reading 'whenReady')` error by unsetting `ELECTRON_RUN_AS_NODE` environment variable
+- **Renderer Loading**: Fixed blank screen issue by configuring fixed port (9099) and passing `ELECTRON_RENDERER_URL` to main process
+- **Port Conflicts**: Resolved port 9000/5173 conflicts by moving renderer to port 9099
 
 ### Changed
 - **Build System**: Migrated from electron-vite to standard Vite with separate configs for main/preload/renderer
@@ -48,6 +51,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 5. "run it for me now" - Request to run after Node.js installation
 6. "heelp with option 1" - Request to implement proper Vite build fix
 7. "upddat the change log" - Request to update CHANGELOG.md
+8. "help contiuing fix the cryto logger app..." - Resumed work on crypto logger
+9. "continue" - Proceeded with diagnosis and fixes
+10. "update the change log" - Request to document fixes
 
 
 # Changelog
