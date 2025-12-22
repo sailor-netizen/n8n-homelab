@@ -28,6 +28,11 @@ const api = {
     exportTaxReport: (financialYear: string, format: string) =>
         ipcRenderer.invoke('tax:export', financialYear, format),
 
+    // Window Controls
+    minimize: () => ipcRenderer.invoke('window:minimize'),
+    maximize: () => ipcRenderer.invoke('window:maximize'),
+    close: () => ipcRenderer.invoke('window:close'),
+
     // Import/Export
     importCsv: (filePath: string) => ipcRenderer.invoke('import:csv', filePath),
     exportDatabase: () => ipcRenderer.invoke('export:database')

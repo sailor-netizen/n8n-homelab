@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
-import WalletConnectProvider from '@walletconnect/web3-provider'
-import { ethers } from 'ethers'
+import WalletConnectModal from '../components/WalletConnectModal'
 
 interface Wallet {
     id: number
@@ -16,7 +15,7 @@ export default function Wallets() {
     const [loading, setLoading] = useState(true)
     const [showAddForm, setShowAddForm] = useState(false)
     const [syncing, setSyncing] = useState<number | null>(null)
-    const [connecting, setConnecting] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
     const [newWallet, setNewWallet] = useState({
         chain: 'BTC',
@@ -30,9 +29,6 @@ export default function Wallets() {
 
     const loadWallets = async () => {
         try {
-            const data = await window.api.getTrades ? await window.api.getWallets() : [] // Fallback if API not ready
-            // Since we are adding this blindly, let's assume getWallets exists as per previous file read
-            // Actually, let's stick to the original code:
             if (window.api && window.api.getWallets) {
                 const data = await window.api.getWallets()
                 setWallets(data)
@@ -63,43 +59,6 @@ export default function Wallets() {
         } catch (error) {
             console.error('Error adding wallet:', error)
             alert('Failed to add wallet. Please check the address.')
-        }
-    }
-
-    const connectWalletConnect = async () => {
-        setConnecting(true)
-        try {
-            // Create WalletConnect Provider
-            const provider = new WalletConnectProvider({
-                rpc: {
-                    1: "https://cloudflare-eth.com", // Mainnet
-                    137: "https://polygon-rpc.com", // Polygon
-                },
-                // bridge: "https://bridge.walletconnect.org" // Default bridge
-            })
-
-            // Enable session (triggers QR Code modal)
-            await provider.enable()
-
-            // Create Web3 Provider
-            const web3Provider = new ethers.BrowserProvider(provider)
-            const signer = await web3Provider.getSigner()
-            const address = await signer.getAddress()
-
-            // Assuming ETH for now as WalletConnect supports EVM
-            if (address) {
-                await saveWallet('ETH', address, 'WalletConnect')
-                alert(`Connected: ${address}`)
-            }
-
-            // Disconnect after getting address so we don't keep session open unnecessarily for this simple logger
-            await provider.disconnect()
-
-        } catch (error) {
-            console.error("WalletConnect Error:", error)
-            alert("Failed to connect via WalletConnect. Check console for details.")
-        } finally {
-            setConnecting(false)
         }
     }
 
@@ -140,6 +99,12 @@ export default function Wallets() {
 
     return (
         <div className="page">
+            <WalletConnectModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onSuccess={() => loadWallets()}
+            />
+
             <div className="page-header">
                 <h1 className="page-title">Wallets</h1>
                 <p className="page-description">
@@ -156,11 +121,10 @@ export default function Wallets() {
                 <div className="mb-4 text-center">
                     <button
                         className="btn btn-primary"
-                        onClick={connectWalletConnect}
-                        disabled={connecting}
-                        style={{ fontSize: '1.2rem', padding: '1rem 2rem', border: '1px dashed var(--color-primary)' }}
+                        onClick={() => setIsModalOpen(true)}
+                        style={{ fontSize: '1.2rem', padding: '1rem 2rem', border: '1px dashed var(--color-cyan)' }}
                     >
-                        {connecting ? 'Connecting...' : '🔗 Connect via WalletConnect'}
+                        🔗 Connect via WalletConnect
                     </button>
                     <p className="text-muted mt-2" style={{ fontSize: '0.8rem' }}>
                         Scan QR code with MetaMask, Trust Wallet, etc.

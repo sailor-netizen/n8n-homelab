@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import WalletConnectModal from '../components/WalletConnectModal'
 
 interface DashboardStats {
     totalTrades: number
@@ -15,6 +16,7 @@ export default function Dashboard() {
         lastSync: 'Never'
     })
     const [loading, setLoading] = useState(true)
+    const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
 
     useEffect(() => {
         loadDashboardData()
@@ -58,6 +60,15 @@ export default function Dashboard() {
 
     return (
         <div className="page">
+            <WalletConnectModal
+                isOpen={isWalletModalOpen}
+                onClose={() => setIsWalletModalOpen(false)}
+                onSuccess={() => {
+                    loadDashboardData()
+                    alert('Wallet connected successfully!')
+                }}
+            />
+
             <div className="page-header">
                 <h1 className="page-title">Dashboard</h1>
                 <p className="page-description">
@@ -104,7 +115,7 @@ export default function Dashboard() {
                     <button className="btn btn-primary" onClick={() => window.location.href = '/manual-entry'}>
                         ✏️ Add Manual Trade
                     </button>
-                    <button className="btn btn-success" onClick={() => window.location.href = '/wallets'}>
+                    <button className="btn btn-success" onClick={() => setIsWalletModalOpen(true)}>
                         👛 Connect Wallet
                     </button>
                     <button className="btn btn-secondary" onClick={() => window.location.href = '/reports'}>

@@ -8,7 +8,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- **Crypto Tax Logger Application**: Created complete Electron-based desktop application for cryptocurrency tax compliance
+- **Terminal UI Redesign**: Complete overhaul of the application theme to a "System Online" / Cyberpunk aesthetic.
+  - **Frameless Window**: Removed standard OS frame for a custom desktop experience with integrated titles and traffic lights.
+  - **Reusable Modal System**: Created a high-tech modal component with backdrop blur and neon cyan framing.
+  - **Integrated WalletConnect**: Built a custom WalletConnect flow that eliminates external pop-ups.
+  - **Integrated QR Code**: QR codes now render directly inside the terminal modal with a "Scanning" laser animation.
+  - **Quick Action Integration**: Added "Connect Wallet" trigger directly to the Dashboard's Quick Actions.
+- **Improved Responsiveness**: Fixed full-height layout issues and added wide-screen content centering.
+
+### Changed
+- **Modular Frontend**: Refactored `Wallets.tsx` and `Dashboard.tsx` to use shared UI components (`WalletConnectModal`).
+- **Dev Workflow**: Resolved persistent "Port 9099 already in use" errors and improved dev server stability.
+
+### Fixed
+- **Window Controls**: Built functional Minimize, Maximize, and Close buttons for the frameless interface.
+- **QR Aesthetic**: Stopped scanline animation automatically when QR is generated for better scan reliability.
+
+### Crypto Tax Logger Application: Created complete Electron-based desktop application for cryptocurrency tax compliance
+
   - Full-stack application with 40+ source files and 3,500+ lines of code
   - React 18 + TypeScript frontend with 6 complete pages (Dashboard, Trade History, Manual Entry, Wallets, Settings, Reports)
   - Professional dark mode design system with modern UI components
