@@ -39,7 +39,13 @@ const api = {
 
     // AI Oracle
     getAiInsights: () => ipcRenderer.invoke('ai:get-insights'),
-    getAiPredictions: () => ipcRenderer.invoke('ai:get-predictions')
+    getAiPredictions: () => ipcRenderer.invoke('ai:get-predictions'),
+    // Market & Watchlist
+    getWatchlist: () => ipcRenderer.invoke('market:get-watchlist'),
+    addWatchlistItem: (item: any) => ipcRenderer.invoke('market:add-watchlist-item', item),
+    deleteWatchlistItem: (id: number) => ipcRenderer.invoke('market:delete-watchlist-item', id),
+    getMarketPrices: (symbols: string[]) => ipcRenderer.invoke('market:get-prices', symbols),
+    analyzeAsset: (symbol: string) => ipcRenderer.invoke('ai:analyze-asset', symbol)
 }
 
 // Expose API to renderer

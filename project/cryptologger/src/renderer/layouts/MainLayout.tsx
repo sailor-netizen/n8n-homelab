@@ -1,6 +1,6 @@
 import { Link, useLocation, Outlet } from 'react-router-dom';
 import { navItems } from '../config/nav';
-import { CSSProperties } from 'react';
+
 
 export function MainLayout() {
     return (
@@ -14,7 +14,7 @@ export function MainLayout() {
                 <div className="terminal-title">user@cryptologger:~/main</div>
             </div>
             <div className="terminal-body">
-                <Sidebar />
+                <HubHeader />
                 <main className="main-content">
                     <div className="scanline"></div>
                     <Outlet />
@@ -24,47 +24,27 @@ export function MainLayout() {
     );
 }
 
-function Sidebar() {
+function HubHeader() {
     const location = useLocation();
+    const isDashboard = location.pathname === '/';
+
+    if (isDashboard) return null;
+
+    const currentItem = navItems.find(item => item.path === location.pathname);
 
     return (
-        <aside className="sidebar">
-            <div className="sidebar-header">
-                <h1 className="app-title">
-                    <span style={{ color: 'var(--color-green)' }}>$</span> CRYPTO_LOGGER
-                </h1>
-                <p className="app-subtitle">v2.0.0 [STABLE]</p>
+        <header className="hub-header">
+            <Link to="/" className="btn-hub-return">
+                <span className="terminal-prompt">[</span> RET_HUB <span className="terminal-prompt">]</span>
+            </Link>
+            <div className="hub-title">
+                <span className="text-muted">LOCATION:</span> {currentItem?.label || 'UNKNOWN_NODE'}
             </div>
-
-            <nav className="sidebar-nav">
-                {navItems.map(item => {
-                    const isActive = location.pathname === item.path;
-                    const style = {
-                        '--item-color': item.color,
-                        borderColor: isActive ? item.color : 'transparent',
-                        color: isActive ? item.color : 'var(--color-text-muted)'
-                    } as CSSProperties;
-
-                    return (
-                        <Link
-                            key={item.path}
-                            to={item.path}
-                            className={`nav-item ${isActive ? 'active' : ''}`}
-                            style={style}
-                        >
-                            <span className="nav-icon">{item.icon}</span>
-                            <span className="nav-label">{item.label}</span>
-                            {isActive && <span className="cursor-blink">_</span>}
-                        </Link>
-                    )
-                })}
-            </nav>
-
-            <div className="sidebar-footer">
-                <p className="sys-status">
-                    <span className="status-dot"></span> SYSTEM ONLINE
-                </p>
+            <div className="hub-status">
+                <span className="status-dot"></span> SECURE_LINE
             </div>
-        </aside>
+        </header>
     );
 }
+
+// Sidebar component removed as per Option 1 redesign

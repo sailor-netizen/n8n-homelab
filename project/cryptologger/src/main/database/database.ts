@@ -29,9 +29,23 @@ export interface Wallet {
     last_synced?: string
 }
 
+export interface WatchlistItem {
+    id?: number
+    symbol: string
+    name: string
+    type: 'crypto' | 'stock'
+    added_at: string
+}
+
 // Mock in-memory storage
 let trades: Trade[] = []
 let wallets: Wallet[] = []
+let watchlist: WatchlistItem[] = [
+    { id: 1, symbol: 'BTC', name: 'Bitcoin', type: 'crypto', added_at: new Date().toISOString() },
+    { id: 2, symbol: 'ETH', name: 'Ethereum', type: 'crypto', added_at: new Date().toISOString() },
+    { id: 3, symbol: 'SOL', name: 'Solana', type: 'crypto', added_at: new Date().toISOString() },
+    { id: 4, symbol: 'TSLA', name: 'Tesla Inc', type: 'stock', added_at: new Date().toISOString() }
+]
 let settings: Record<string, string> = {
     tax_method: 'FIFO',
     base_currency: 'AUD',
@@ -54,16 +68,16 @@ export class DatabaseManager {
     }
 
     // API Keys (mock - not secure)
-    saveApiKey(exchange: string, apiKey: string, apiSecret: string): void {
-        console.log(`Saved API keys for ${exchange}`)
+    saveApiKey(_exchange: string, _apiKey: string, _apiSecret: string): void {
+        console.log(`Saved API keys for ${_exchange}`)
     }
 
-    getApiKey(exchange: string): { api_key: string; api_secret: string } | null {
+    getApiKey(_exchange: string): { api_key: string; api_secret: string } | null {
         return null
     }
 
     // Trades
-    getTrades(filters?: any): Trade[] {
+    getTrades(_filters?: any): Trade[] {
         return [...trades]
     }
 
@@ -103,24 +117,43 @@ export class DatabaseManager {
         wallets = wallets.filter(w => w.id !== id)
     }
 
+    // Watchlist
+    getWatchlist(): WatchlistItem[] {
+        return [...watchlist]
+    }
+
+    addWatchlistItem(item: Omit<WatchlistItem, 'id' | 'added_at'>): number {
+        const id = watchlist.length + 1
+        watchlist.push({
+            ...item,
+            id,
+            added_at: new Date().toISOString()
+        })
+        return id
+    }
+
+    deleteWatchlistItem(id: number): void {
+        watchlist = watchlist.filter(item => item.id !== id)
+    }
+
     // Tax lots (mock)
-    addTaxLot(lot: any): number {
+    addTaxLot(_lot: any): number {
         return 1
     }
 
-    getTaxLots(asset: string, notFullyDisposed: boolean = true): any[] {
+    getTaxLots(_asset: string, _notFullyDisposed: boolean = true): any[] {
         return []
     }
 
-    updateTaxLot(id: number, remainingAmount: number, isFullyDisposed: boolean): void {
+    updateTaxLot(_id: number, _remainingAmount: number, _isFullyDisposed: boolean): void {
         // Mock
     }
 
-    addTaxDisposal(disposal: any): number {
+    addTaxDisposal(_disposal: any): number {
         return 1
     }
 
-    getTaxDisposals(financialYear?: string): any[] {
+    getTaxDisposals(_financialYear?: string): any[] {
         return []
     }
 
