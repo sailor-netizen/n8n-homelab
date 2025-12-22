@@ -23,13 +23,13 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.0",
     "@electron-toolkit/utils": "^3.0.0",
-    "better-sqlite3": "^9.2.2",
-    "ccxt": "^4.2.25",
-    "ethers": "^6.10.0",
     "@solana/web3.js": "^1.87.6",
     "@walletconnect/web3-provider": "^1.8.0",
     "axios": "^1.6.5",
+    "better-sqlite3": "^9.2.2",
+    "ccxt": "^4.2.25",
     "date-fns": "^3.0.6",
+    "ethers": "^6.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.1"
@@ -52,6 +52,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "typescript": "^5.3.3",
     "vite": "^5.0.11",
+    "vite-plugin-node-polyfills": "^0.24.0",
     "wait-on": "^7.2.0"
   },
   "build": {

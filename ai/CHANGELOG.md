@@ -65,6 +65,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **WalletConnect**: Integrated `@walletconnect/web3-provider` to allow connecting mobile wallets via QR code.
+- **Polyfills**: Added `vite-plugin-node-polyfills` to support Node.js globals (`Buffer`, `process`) in the renderer.
+- **Fonts**: Added 'Fira Code' Google Font for the new terminal aesthetic.
+
+### Changed
+- **UI Theme**: Complete redesign to "Colorful Terminal" / Cyberpunk aesthetic (Neon Green/Pink on Black).
+- **Styling**: Updated all components (Buttons, Cards, Tables) to use sharp edges and glowing borders.
+
+### Fixed
+- **Blank Screen**: Resolved renderer crash by properly polyfilling `global` and `Buffer` for Web3 libraries.
+- **Dropdowns**: Fixed unreadable `select`/`option` elements in dark mode.
+
+### Removed
+- **Cleanup**: Deleted deprecated `electron.vite.config.ts` which was causing import errors.
+
 ### Fixed
 - **Nginx Configuration**: Recreated missing Nginx server block configs (`n8n-proxmox.conf`, `n8n-homelab.conf`, `n8n-game.conf`, `n8n-ai.conf`).
 - **Nginx Mounting**: Fixed empty `conf.d/` directory issue by regenerating configuration files.
