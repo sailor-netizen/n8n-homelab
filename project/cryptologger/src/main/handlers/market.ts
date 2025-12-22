@@ -19,21 +19,47 @@ export function setupMarketHandlers(db: DatabaseManager) {
     ipcMain.handle('market:get-prices', async (_event, symbols: string[]) => {
         // In a real app, this would call a public API like CoinCap or Binance
         return symbols.map(symbol => {
-            const basePrice = symbol === 'BTC' ? 65000 : symbol === 'ETH' ? 3500 : symbol === 'SOL' ? 140 : 170
+            const isDXY = symbol === 'DXY'
+            const basePrice = symbol === 'BTC' ? 65000 : symbol === 'ETH' ? 3500 : isDXY ? 104 : symbol === 'SOL' ? 140 : 170
+
+            // Basic volatility simulation
             const change = (Math.random() - 0.5) * 2 // -1% to +1%
             const price = basePrice * (1 + (change / 100))
+
+            // Generate longer history for the main charts (50 points)
+            const priceHistory = Array.from({ length: 50 }, (_, i) => ({
+                time: i,
+                value: price * (1 + (Math.random() - 0.5) * 0.05)
+            }))
+
+            const ohlcHistory = Array.from({ length: 50 }, (_, i) => {
+                const open = price * (1 + (Math.random() - 0.5) * 0.02)
+                const close = open * (1 + (Math.random() - 0.5) * 0.03)
+                const high = Math.max(open, close) * (1 + Math.random() * 0.01)
+                const low = Math.min(open, close) * (1 - Math.random() * 0.01)
+                return { time: i, open, high, low, close }
+            })
+
+            const volumeHistory = Array.from({ length: 50 }, (_, i) => ({
+                time: i,
+                value: Math.random() * 50000000
+            }))
+
+            const sentimentHistory = Array.from({ length: 50 }, (_, i) => ({
+                time: i,
+                value: Math.random() * 100
+            }))
 
             return {
                 symbol,
                 price,
-                change24h: (Math.random() - 0.4) * 5, // -2% to +3%
-                marketCap: Math.random() * 1000000000,
+                change24h: isDXY ? (Math.random() - 0.5) * 0.5 : (Math.random() - 0.4) * 5,
+                marketCap: isDXY ? 0 : Math.random() * 1000000000,
                 volume24h: Math.random() * 50000000,
-                // Generate mock bar data (last 20 intervals)
-                history: Array.from({ length: 20 }, (_, i) => ({
-                    time: i,
-                    value: price * (1 + (Math.random() - 0.5) * 0.02)
-                }))
+                history: priceHistory,
+                ohlcHistory,
+                volumeHistory,
+                sentimentHistory
             }
         })
     })

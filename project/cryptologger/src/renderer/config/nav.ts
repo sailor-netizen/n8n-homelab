@@ -2,11 +2,23 @@ export interface NavItem {
     path: string;
     icon: string;
     label: string;
-    color: string; // CSS variable name e.g., 'var(--color-cyan)'
+    color: string;
+    subItems?: { path: string; label: string }[];
 }
 
 export const navItems: NavItem[] = [
-    { path: '/', icon: '📊', label: 'Dashboard', color: 'var(--color-cyan)' },
+    {
+        path: '/',
+        icon: '📊',
+        label: 'Dashboard',
+        color: 'var(--color-cyan)',
+        subItems: [
+            { path: '/', label: 'OVERVIEW' },
+            { path: '/dashboard/watchlist', label: 'WATCHLISTS' },
+            { path: '/dashboard/charts', label: 'CHARTS' },
+            { path: '/dashboard/trending', label: 'TRENDING' }
+        ]
+    },
     { path: '/trades', icon: '📈', label: 'Trade History', color: 'var(--color-pink)' },
     { path: '/manual-entry', icon: '✏️', label: 'Manual Entry', color: 'var(--color-yellow)' },
     { path: '/wallets', icon: '👛', label: 'Wallets', color: 'var(--color-green)' },

@@ -1,3 +1,15 @@
+export interface MarketData {
+    symbol: string
+    price: number
+    change24h: number
+    marketCap: number
+    volume24h: number
+    history: { time: number; value: number }[]
+    ohlcHistory?: { time: number; open: number; high: number; low: number; close: number }[]
+    volumeHistory?: { time: number; value: number }[]
+    sentimentHistory?: { time: number; value: number }[]
+}
+
 export interface IApi {
     getSettings: () => Promise<Record<string, string>>
     updateSetting: (key: string, value: string) => Promise<void>
@@ -29,5 +41,6 @@ export interface IApi {
 declare global {
     interface Window {
         api: IApi
+        TradingView: any
     }
 }

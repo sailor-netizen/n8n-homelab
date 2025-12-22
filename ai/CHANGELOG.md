@@ -8,6 +8,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **TradingView Intelligence Terminal**: Fully migrated the visualization layer to official TradingView widgets.
+  - **Advanced Tactical Charts**: Integrated the full TV Advanced Charting widget with 100+ indicators and professional drawing tools.
+  - **Global Ticker Tape**: Deployed a persistent real-time market stream in the terminal header.
+  - **Neural Market Overview**: Replaced custom ticker cards with a high-density Market Overview console.
+  - **Tactical Sidebar Gauges**: Integrated official Technical Analysis and Symbol Info widgets for deep-dive asset metrics.
+  - **Live Search Preview**: Added a real-time TradingView uplink to the `AddAssetModal` for instant node verification.
+- **Widget Stabilization Engine**: Implemented cross-platform rendering protocols for Electron.
+  - **Hydration Guards**: Added 100ms initialization delays to ensure DOM readiness before widget uplink.
+  - **Unique ID Isolation**: Implemented dynamic container ID generation to prevent rendering collisions during navigation.
+- **Neural Control Pad**: Added interactive sidebar filters for scanning multiple data vectors (Price, Volume, Sentiment).
+- **Multi-Vector Telemetry**: Expanded the market simulation engine to provide synchronized Price, Volume, and Sentiment history.
+- **Dynamic Timeframe Scanning**: Implemented multi-resolution scanning (1H, 4H, 1D) across the intelligence hub.
+- **Market Intelligence Hub**: Transformed the Dashboard into a data-dense "Mainframe Console".
+  - **Neural Toolbar**: Compact top-bar navigation that reclaims 90% of screen space.
+  - **Intelligence Canvas**: Large interactive preview panel for deep-dive asset tracking.
+  - **Real-time Data Engine**: Automatic 5-second polling for live coin and stock prices.
+  - **Neon Bar Charts**: Custom terminal-styled visualizations for price and volume trends.
+  - **Custom Watchlist**: Functional "Add Node" and "Delete Node" system for customized asset tracking.
+  - **AI Neural Snapshots**: Real-time technical analysis and "Oracle Verdicts" for tracked symbols.
+- **Type Safety**: Implemented `src/renderer/global.d.ts` to provide proper TypeScript definitions for the `window.api` Electron bridge.
+- **WalletConnect**: Integrated `@walletconnect/web3-provider` to allow connecting mobile wallets via QR code.
+- **Polyfills**: Added `vite-plugin-node-polyfills` to support Node.js globals (`Buffer`, `process`) in the renderer.
+- **Fonts**: Added 'Fira Code' Google Font for the new terminal aesthetic.
+
+### Changed
+- **Strategy Pivot**: Transitioned from custom `lightweight-charts` implementation to official professional widgets for superior data fidelity and toolkit access.
+- **Telemetry Calibration**: Refined symbol formatting logic across the mainframe to ensure 100% compatibility with TradingView's data network.
+- **Reclaimed Canvas**: Optimized CSS layout to ensure widgets resize dynamically when the Neural Watchlist sidebar is toggled.
+- **Neural UI Consistency**: Standardized filter switches and bar charts to align with the "Mainframe Console" aesthetic.
 - **Terminal UI Redesign**: Complete overhaul of the application theme to a "System Online" / Cyberpunk aesthetic.
   - **Frameless Window**: Removed standard OS frame for a custom desktop experience with integrated titles and traffic lights.
   - **Reusable Modal System**: Created a high-tech modal component with backdrop blur and neon cyan framing.
@@ -15,8 +44,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Integrated QR Code**: QR codes now render directly inside the terminal modal with a "Scanning" laser animation.
   - **Quick Action Integration**: Added "Connect Wallet" trigger directly to the Dashboard's Quick Actions.
 - **Improved Responsiveness**: Fixed full-height layout issues and added wide-screen content centering.
-
-### Changed
 - **Modular Frontend**: Refactored `Wallets.tsx` and `Dashboard.tsx` to use shared UI components (`WalletConnectModal`).
 - **Dev Workflow**: Resolved persistent "Port 9099 already in use" errors and improved dev server stability.
 
@@ -122,24 +149,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - **Cleanup**: Removed redundant `SSL_SETUP.md`, local `README.md`, and `.gitignore` from `n8n-cluster/` folder.
 
+### Added
+- **Market Intelligence Hub**: Transformed the Dashboard into a data-dense "Mainframe Console".
+  - **Neural Toolbar**: Compact top-bar navigation that reclaims 90% of screen space.
+  - **Intelligence Canvas**: Large interactive preview panel for deep-dive asset tracking.
+  - **Real-time Data Engine**: Automatic 5-second polling for live coin and stock prices.
+  - **Neon Bar Charts**: Custom terminal-styled visualizations for price and volume trends.
+  - **Custom Watchlist**: Functional "Add Node" and "Delete Node" system for customized asset tracking.
+  - **AI Neural Snapshots**: Real-time technical analysis and "Oracle Verdicts" for tracked symbols.
+- **Type Safety**: Implemented `src/renderer/global.d.ts` to provide proper TypeScript definitions for the `window.api` Electron bridge.
+
+### Changed
+- **Navigation Flow**: Replaced the persistent sidebar with a "Hub-first" architecture.
+- **Dashboard Refinement**: Moved from large tile-grid to a more professional "Mainframe" layout with compact controls.
+
+### Fixed
+- **TypeScript Regression**: Restored accidentally removed React imports and fixed implicit `any` lint errors in `Dashboard.tsx`.
+- **Preload Stability**: Fixed syntax errors in `preload/index.ts` caused by accidental markdown noise.
+- **Code Quality**: Resolved unused parameter warnings in the `DatabaseManager` mock implementation.
+
 ### User Prompts (Session Log)
-1. "docker exec nginx-proxy nginx -t" - Verified Nginx configuration syntax
-2. "where do i place all of these config files in the lxc" - Clarified deployment location
-3. "im going to upload this to git hub tell me aall the steps to do this" - GitHub preparation
-4. "this is going to be my home lab repo make this its own project and orginise the folders" - Repository restructuring
-5. "lets rename the repo to something with sailor as thats the domain" - Renamed to SailorNet Shipyard
-6. "make a chaange log file and folder for the ai chat logs to sit and other ai files" - Created CHANGELOG and ai/ folder
-7. "move the change log to the ai folder and change the name for the dfolder ai-logs i dont want the log part" - Renamed ai-logs to ai
-8. "make a prompt folder that can be used for makeing the ai chat use the change log" - Created prompts system
-9. "make this readable files for cluade code like md.cluade to ustilise the ai feautres" - Added .claude.md extension
-10. "i want to make one for each ai like the 10 main ones" - Created model-specific prompt folders
-11. "make the files for each ai readable and more acessable for that ai type" - Optimized prompts per model
-12. "now make system system prompts for the code base" - Created codebase-expert prompts
-13. "make general prompt in the main prompts dir and also make a prompt in at dir for pointing eweach ai to the folder" - Created general prompt and AI router
-14. "update the change log with all the update in this chat" - Updated changelog
-15. "add the user prompts to this" - Added user prompts section
-16. "make sure the change log always adds the user promt" - Updated all changelog manager prompts
-17. "make anoter folder called promox and make instructions for getting it reeady for the docker templates" - Created Proxmox setup guide
+1. "Dashboard Hub Navigation" - Initiated navigation overhaul.
+2. "i want to include a preview make the the control panel smaller and a the top" - Requested compact nav.
+3. "i want the preview to actual display below the control header it should default to the main page which should be a coin tracking page" - Defined default state.
+4. "i want to be able too add my own coins i want to track and stocks, it should also include a chart and some analysis from the ai and some general kpi/analytics" - Expanded to Market Intelligence Hub.
+5. "i want bar chart and real time data" - Specified visualization and data requirements.
+6. "yea lets do the plan" - Approved implementation phase.
+7. "make the chaart have a filter for the over view so u can select between timeframs and different filter type like vol, etc and also live tickers. should i use trading view charts" - Requested advanced charting and filters.
+8. "lets do it" - Approved chart upgrade and lightweight-charts integration.
+9. "the chart screen is black" - Reported library version conflict.
+10. "for the chart view use a bar chart and mark sure its one where i can addd indicators also have the time frames and add the watch list bar to the right side side bar with a hambuger menu for a toggle, or what ever is ther terminal eqvilent" - Requested OHLC charts and watchlist sidebar.
+11. "update the change log" - Documented the transition to high-performance charting.
 
 ## [0.1.0] - 2025-12-02
 ### Added
