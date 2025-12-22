@@ -6,6 +6,7 @@ import ManualEntry from './pages/ManualEntry'
 import Wallets from './pages/Wallets'
 import Settings from './pages/Settings'
 import Reports from './pages/Reports'
+import AIOracle from './pages/AIOracle'
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                     <Route path="/manual-entry" element={<ManualEntry />} />
                     <Route path="/wallets" element={<Wallets />} />
                     <Route path="/reports" element={<Reports />} />
+                    <Route path="/ai-oracle" element={<AIOracle />} />
                     <Route path="/settings" element={<Settings />} />
                 </Route>
             </Routes>

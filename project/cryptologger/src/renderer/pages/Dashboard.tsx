@@ -106,21 +106,36 @@ export default function Dashboard() {
                 </div>
             </div>
 
-            <div className="card">
-                <div className="card-header">
-                    <h2 className="card-title">Quick Actions</h2>
+            <div className="card-grid mt-4">
+                <div className="card" style={{ gridColumn: 'span 2' }}>
+                    <div className="card-header">
+                        <h2 className="card-title">Neural Insights</h2>
+                    </div>
+                    <div style={{ padding: '1rem', background: 'rgba(0, 242, 255, 0.05)', border: '1px solid rgba(0, 242, 255, 0.2)' }}>
+                        <p className="text-cyan mb-2" style={{ fontSize: '0.8rem' }}>&gt; AI ORACLE STATUS: ONLINE</p>
+                        <p className="text-muted" style={{ fontSize: '0.9rem' }}>Run neural analysis to scan your trade vectors for entry and exit discrepancies.</p>
+                        <button className="btn btn-primary mt-3" onClick={() => window.location.href = '/ai-oracle'}>
+                            🧠 ACCESS AI ORACLE
+                        </button>
+                    </div>
                 </div>
 
-                <div className="btn-group">
-                    <button className="btn btn-primary" onClick={() => window.location.href = '/manual-entry'}>
-                        ✏️ Add Manual Trade
-                    </button>
-                    <button className="btn btn-success" onClick={() => setIsWalletModalOpen(true)}>
-                        👛 Connect Wallet
-                    </button>
-                    <button className="btn btn-secondary" onClick={() => window.location.href = '/reports'}>
-                        📄 Generate Report
-                    </button>
+                <div className="card">
+                    <div className="card-header">
+                        <h2 className="card-title">Quick Actions</h2>
+                    </div>
+
+                    <div className="btn-group" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <button className="btn btn-primary" onClick={() => window.location.href = '/manual-entry'}>
+                            ✏️ Add Manual Trade
+                        </button>
+                        <button className="btn btn-success" onClick={() => setIsWalletModalOpen(true)}>
+                            👛 Connect Wallet
+                        </button>
+                        <button className="btn btn-secondary" onClick={() => window.location.href = '/reports'}>
+                            📄 Generate Report
+                        </button>
+                    </div>
                 </div>
             </div>
 

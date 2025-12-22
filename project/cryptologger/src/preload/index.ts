@@ -35,7 +35,11 @@ const api = {
 
     // Import/Export
     importCsv: (filePath: string) => ipcRenderer.invoke('import:csv', filePath),
-    exportDatabase: () => ipcRenderer.invoke('export:database')
+    exportDatabase: () => ipcRenderer.invoke('export:database'),
+
+    // AI Oracle
+    getAiInsights: () => ipcRenderer.invoke('ai:get-insights'),
+    getAiPredictions: () => ipcRenderer.invoke('ai:get-predictions')
 }
 
 // Expose API to renderer

@@ -11,5 +11,6 @@ export const navItems: NavItem[] = [
     { path: '/manual-entry', icon: '✏️', label: 'Manual Entry', color: 'var(--color-yellow)' },
     { path: '/wallets', icon: '👛', label: 'Wallets', color: 'var(--color-green)' },
     { path: '/reports', icon: '📄', label: 'Reports', color: 'var(--color-purple)' },
+    { path: '/ai-oracle', icon: '🧠', label: 'AI Oracle', color: 'var(--color-cyan)' },
     { path: '/settings', icon: '⚙️', label: 'Settings', color: 'var(--color-text-muted)' }
 ];

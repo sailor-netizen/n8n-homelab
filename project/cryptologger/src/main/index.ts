@@ -6,6 +6,7 @@ import { setupTradeHandlers } from './handlers/trades'
 import { setupWalletHandlers } from './handlers/wallets'
 import { setupTaxHandlers } from './handlers/tax'
 import { setupIntegrationHandlers } from './handlers/integrations'
+import { setupAiHandlers } from './handlers/ai'
 
 let mainWindow: BrowserWindow | null = null
 let db: DatabaseManager | null = null
@@ -94,4 +95,5 @@ function setupIpcHandlers(db: DatabaseManager) {
     setupWalletHandlers(db)
     setupTaxHandlers(db)
     setupIntegrationHandlers(db)
+    setupAiHandlers(db)
 }
