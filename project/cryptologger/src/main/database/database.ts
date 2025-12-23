@@ -40,12 +40,15 @@ export interface WatchlistItem {
 // Mock in-memory storage
 let trades: Trade[] = []
 let wallets: Wallet[] = []
-let watchlist: WatchlistItem[] = [
-    { id: 1, symbol: 'BTC', name: 'Bitcoin', type: 'crypto', added_at: new Date().toISOString() },
-    { id: 2, symbol: 'ETH', name: 'Ethereum', type: 'crypto', added_at: new Date().toISOString() },
-    { id: 3, symbol: 'SOL', name: 'Solana', type: 'crypto', added_at: new Date().toISOString() },
-    { id: 4, symbol: 'TSLA', name: 'Tesla Inc', type: 'stock', added_at: new Date().toISOString() }
-]
+let watchlists: Record<string, WatchlistItem[]> = {
+    'Default': [
+        { id: 1, symbol: 'BTC', name: 'Bitcoin', type: 'crypto', added_at: new Date().toISOString() },
+        { id: 2, symbol: 'ETH', name: 'Ethereum', type: 'crypto', added_at: new Date().toISOString() },
+        { id: 3, symbol: 'SOL', name: 'Solana', type: 'crypto', added_at: new Date().toISOString() },
+        { id: 4, symbol: 'TSLA', name: 'Tesla Inc', type: 'stock', added_at: new Date().toISOString() }
+    ]
+}
+let activeWatchlistName = 'Default'
 let settings: Record<string, string> = {
     tax_method: 'FIFO',
     base_currency: 'AUD',
@@ -118,13 +121,30 @@ export class DatabaseManager {
     }
 
     // Watchlist
-    getWatchlist(): WatchlistItem[] {
-        return [...watchlist]
+    getWatchlists(): string[] {
+        return Object.keys(watchlists)
     }
 
-    addWatchlistItem(item: Omit<WatchlistItem, 'id' | 'added_at'>): number {
-        const id = watchlist.length + 1
-        watchlist.push({
+    getWatchlist(name: string = activeWatchlistName): WatchlistItem[] {
+        return [...(watchlists[name] || [])]
+    }
+
+    createWatchlist(name: string): void {
+        if (!watchlists[name]) {
+            watchlists[name] = []
+        }
+    }
+
+    deleteWatchlist(name: string): void {
+        if (name !== 'Default') {
+            delete watchlists[name]
+        }
+    }
+
+    addWatchlistItem(item: Omit<WatchlistItem, 'id' | 'added_at'>, listName: string = activeWatchlistName): number {
+        if (!watchlists[listName]) watchlists[listName] = []
+        const id = Math.max(0, ...Object.values(watchlists).flat().map(i => i.id || 0)) + 1
+        watchlists[listName].push({
             ...item,
             id,
             added_at: new Date().toISOString()
@@ -132,8 +152,10 @@ export class DatabaseManager {
         return id
     }
 
-    deleteWatchlistItem(id: number): void {
-        watchlist = watchlist.filter(item => item.id !== id)
+    deleteWatchlistItem(id: number, listName: string = activeWatchlistName): void {
+        if (watchlists[listName]) {
+            watchlists[listName] = watchlists[listName].filter(item => item.id !== id)
+        }
     }
 
     // Tax lots (mock)

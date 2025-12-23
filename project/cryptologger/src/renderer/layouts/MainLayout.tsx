@@ -3,11 +3,12 @@ import { navItems } from '../config/nav';
 import NodeToolbar from '../components/NodeToolbar';
 import WalletConnectModal from '../components/WalletConnectModal';
 import TradingViewTickerTape from '../components/TradingViewTickerTape';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 
 export function MainLayout() {
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
+    const [activeAsset, setActiveAsset] = useState<string | null>('BTC');
 
     return (
         <div className="terminal-window">
@@ -29,7 +30,7 @@ export function MainLayout() {
                     <SideNav />
                     <main className="main-content">
                         <div className="scanline"></div>
-                        <Outlet />
+                        <Outlet context={{ activeAsset, setActiveAsset }} />
                     </main>
                 </div>
             </div>
@@ -54,7 +55,9 @@ function SideNav() {
 
     return (
         <aside className="sub-sidebar">
-            <div className="sidebar-label">SUB_NODES</div>
+            <div className="sidebar-header-row">
+                <div className="sidebar-label">SUB_NODES</div>
+            </div>
             <nav className="sub-nav">
                 {currentMain.subItems.map(sub => (
                     <Link
@@ -82,11 +85,10 @@ function HubHeader() {
             <div className="hub-title">
                 <span className="text-muted">NODE_PATH:</span> {currentItem?.label || 'SYSTEM_ROOT'}
             </div>
+
             <div className="hub-status">
                 <span className="status-dot"></span> SECURE_LINE_ACTIVE
             </div>
         </div>
     );
 }
-
-// Sidebar component removed as per Option 1 redesign

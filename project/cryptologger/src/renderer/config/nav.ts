@@ -14,7 +14,6 @@ export const navItems: NavItem[] = [
         color: 'var(--color-cyan)',
         subItems: [
             { path: '/', label: 'OVERVIEW' },
-            { path: '/dashboard/watchlist', label: 'WATCHLISTS' },
             { path: '/dashboard/charts', label: 'CHARTS' },
             { path: '/dashboard/trending', label: 'TRENDING' }
         ]

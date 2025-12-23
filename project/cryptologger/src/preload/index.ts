@@ -41,9 +41,12 @@ const api = {
     getAiInsights: () => ipcRenderer.invoke('ai:get-insights'),
     getAiPredictions: () => ipcRenderer.invoke('ai:get-predictions'),
     // Market & Watchlist
-    getWatchlist: () => ipcRenderer.invoke('market:get-watchlist'),
-    addWatchlistItem: (item: any) => ipcRenderer.invoke('market:add-watchlist-item', item),
-    deleteWatchlistItem: (id: number) => ipcRenderer.invoke('market:delete-watchlist-item', id),
+    getWatchlists: () => ipcRenderer.invoke('market:get-watchlists'),
+    getWatchlist: (name?: string) => ipcRenderer.invoke('market:get-watchlist', name),
+    createWatchlist: (name: string) => ipcRenderer.invoke('market:create-watchlist', name),
+    deleteWatchlist: (name: string) => ipcRenderer.invoke('market:delete-watchlist', name),
+    addWatchlistItem: (item: any, listName?: string) => ipcRenderer.invoke('market:add-watchlist-item', item, listName),
+    deleteWatchlistItem: (id: number, listName?: string) => ipcRenderer.invoke('market:delete-watchlist-item', id, listName),
     getMarketPrices: (symbols: string[]) => ipcRenderer.invoke('market:get-prices', symbols),
     analyzeAsset: (symbol: string) => ipcRenderer.invoke('ai:analyze-asset', symbol)
 }

@@ -31,9 +31,12 @@ export interface IApi {
     exportDatabase: () => Promise<string>
     getAiInsights: () => Promise<any>
     getAiPredictions: () => Promise<any>
-    getWatchlist: () => Promise<any[]>
-    addWatchlistItem: (item: any) => Promise<number>
-    deleteWatchlistItem: (id: number) => Promise<void>
+    getWatchlists: () => Promise<string[]>
+    getWatchlist: (name?: string) => Promise<any[]>
+    createWatchlist: (name: string) => Promise<void>
+    deleteWatchlist: (name: string) => Promise<void>
+    addWatchlistItem: (item: any, listName?: string) => Promise<number>
+    deleteWatchlistItem: (id: number, listName?: string) => Promise<void>
     getMarketPrices: (symbols: string[]) => Promise<any[]>
     analyzeAsset: (symbol: string) => Promise<any>
 }

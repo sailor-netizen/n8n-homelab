@@ -3,16 +3,28 @@ import { DatabaseManager } from '../database/database'
 
 export function setupMarketHandlers(db: DatabaseManager) {
     // Watchlist Management
-    ipcMain.handle('market:get-watchlist', async () => {
-        return db.getWatchlist()
+    ipcMain.handle('market:get-watchlists', async () => {
+        return db.getWatchlists()
     })
 
-    ipcMain.handle('market:add-watchlist-item', async (_event, item) => {
-        return db.addWatchlistItem(item)
+    ipcMain.handle('market:get-watchlist', async (_event, name) => {
+        return db.getWatchlist(name)
     })
 
-    ipcMain.handle('market:delete-watchlist-item', async (_event, id) => {
-        return db.deleteWatchlistItem(id)
+    ipcMain.handle('market:create-watchlist', async (_event, name) => {
+        return db.createWatchlist(name)
+    })
+
+    ipcMain.handle('market:delete-watchlist', async (_event, name) => {
+        return db.deleteWatchlist(name)
+    })
+
+    ipcMain.handle('market:add-watchlist-item', async (_event, item, listName) => {
+        return db.addWatchlistItem(item, listName)
+    })
+
+    ipcMain.handle('market:delete-watchlist-item', async (_event, id, listName) => {
+        return db.deleteWatchlistItem(id, listName)
     })
 
     // Real-time Market Data (Mocked for now with volatility simulation)

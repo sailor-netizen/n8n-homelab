@@ -1,40 +1,36 @@
 import { useState, useEffect } from 'react'
-import AddAssetModal from '../components/AddAssetModal'
+import { useOutletContext } from 'react-router-dom'
 import TradingViewSymbolOverview from '../components/TradingViewSymbolOverview'
 import TradingViewSymbolInfo from '../components/TradingViewSymbolInfo'
 import TradingViewTechnicalAnalysis from '../components/TradingViewTechnicalAnalysis'
 
-interface WatchlistItem {
-    id: number
-    symbol: string
-    name: string
-    type: 'crypto' | 'stock'
+interface DashboardContext {
+    activeAsset: string | null
+    setActiveAsset: (symbol: string | null) => void
 }
 
 export default function Dashboard() {
-    const [watchlist, setWatchlist] = useState<WatchlistItem[]>([])
-    const [activeAsset, setActiveAsset] = useState<string | null>(null)
+    const { activeAsset, setActiveAsset } = useOutletContext<DashboardContext>()
     const [loading, setLoading] = useState(true)
-    const [isAddAssetModalOpen, setIsAddAssetModalOpen] = useState(false)
 
-    // Initial load
     useEffect(() => {
-        const init = async () => {
-            const list = await window.api.getWatchlist() as WatchlistItem[]
-            setWatchlist(list)
-            if (list.length > 0) {
-                setActiveAsset(list[0].symbol)
-            }
-            setLoading(false)
-        }
-        init()
+        // Simplified boot sequence
+        const timer = setTimeout(() => setLoading(false), 500);
+        return () => clearTimeout(timer);
     }, [])
 
-    const handleAddAsset = async (symbol: string, name: string, type: 'crypto' | 'stock') => {
-        await window.api.addWatchlistItem({ symbol, name, type })
-        const newList = await window.api.getWatchlist()
-        setWatchlist(newList)
-        setActiveAsset(symbol)
+    // Format symbols for TradingView Overview widget
+    const formatTVSymbols = () => {
+        return [
+            ["Market Overview", [
+                ["BINANCE:BTCUSDT"],
+                ["BINANCE:ETHUSDT"],
+                ["BINANCE:SOLUSDT"],
+                ["BINANCE:SOLBTC"],
+                ["INDEX:DXY"],
+                ["BINANCE:XRPUSDT"]
+            ]]
+        ];
     }
 
     // Format symbols for TradingView Overview widget
@@ -60,11 +56,6 @@ export default function Dashboard() {
                 <div>
                     <h1 className="page-title">Mainframe Console</h1>
                     <p className="page-description">TRADINGVIEW_INTELLIGENCE: SECURE_LINE_ACTIVE</p>
-                </div>
-                <div style={{ display: 'flex', gap: '10px' }}>
-                    <button className="btn btn-secondary" onClick={() => setIsAddAssetModalOpen(true)}>
-                        [ INITIALIZE_NEW_NODE ]
-                    </button>
                 </div>
             </div>
 
